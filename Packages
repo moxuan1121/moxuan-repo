@@ -347,6 +347,22 @@ Description: 系统“扫码器”扫到网址后直接在 Safari 打开，不�
 Author: moxuan1121
 Name: 扫码直开Safari
 
+Package: com.moxuan.wcpulselite
+Version: 0.1.12
+Architecture: iphoneos-arm64e
+Maintainer: moxuan
+Installed-Size: 256
+Depends: mobilesubstrate, firmware (>= 15.0), firmware (<< 16.0)
+Filename: debs/com.moxuan.wcpulselite_0.1.12_iphoneos-arm64e.deb
+Size: 30696
+MD5sum: fb8ed24694f58dcf841f3e893db7adbc
+SHA1: bc868b3e1d831523adbc56c6de3393cf8bed7f9f
+SHA256: 876f1c44a24195c3af9bac23ff988bc294dd532ab8e123408d4c61c67a2cf075
+Section: Tweaks
+Description: 置顶点击保留 / 首页圆角 / 视频两侧长按倍速 / 消息直达 / 群聊艾特提示
+Author: moxuan
+Name: WCPulseLite
+
 Package: com.moxuan1121.choicy
 Version: 1.5.4-8
 Architecture: iphoneos-arm64e
