@@ -1,0 +1,113 @@
+name: Update APT repository
+
+on:
+  push:
+    paths:
+      - "debs/*.deb"
+      - ".github/workflows/update-repo.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # newer ubuntu-latest images no longer ship apt-ftparchive
+      - run: command -v apt-ftparchive || { sudo apt-get update -qq && sudo apt-get install -y -qq apt-utils; }
+      - run: |
+          dpkg-scanpackages -m debs /dev/null > Packages
+          cat >> Packages <<'EOF'
+
+          Package: com.moxuan.repo.notice
+          Version: 1.0
+          Architecture: iphoneos-arm64e
+          Maintainer: 墨轩
+          Installed-Size: 0
+          Filename: unavailable/personal-repository-notice.deb
+          Size: 0
+          MD5sum: d41d8cd98f00b204e9800998ecf8427e
+          SHA1: da39a3ee5e6b4b0d3255bfef95601890afd80709
+          SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+          Section: 源使用说明
+          Description: 本源仅供个人使用，所有软件包只针对 iOS 15 与 Dopamine RootHide 环境适配，不支持其他系统版本或越狱环境，请勿尝试安装本说明包。
+          Tag: cydia::commercial
+          Author: 墨轩
+          Icon: https://moxuan1121.github.io/moxuan-repo/CydiaIcon.png
+          Name: !!!【必看】本源为个人自用源，仅适配 iOS 15
+          EOF
+          awk -v RS='' -v ORS='\n\n' '
+            {
+              fontchange = $0 ~ /(^|\n)Package: com\.moxuan\.fontchange(\n|$)/
+              regionshot = $0 ~ /(^|\n)Package: com\.moxuan\.regionshot(\n|$)/
+              processguardian = $0 ~ /(^|\n)Package: com\.moxuan\.processguardian(\n|$)/
+              jpcallerid = $0 ~ /(^|\n)Package: com\.moxuan1121\.jpcallerid(\n|$)/
+              choicy = $0 ~ /(^|\n)Package: com\.moxuan1121\.choicy(\n|$)/
+              parallelx = $0 ~ /(^|\n)Package: com\.moxuan\.parallelx(\n|$)/
+              if ($0 !~ /(^|\n)Depends:/) {
+                if (!regionshot && !processguardian) $0 = $0 "\nDepends: firmware (>= 15.0)" (fontchange ? "" : ", firmware (<< 16.0)")
+              } else {
+                if (!regionshot && !processguardian && $0 !~ /firmware \(>= 15\.0\)/) sub(/(^|\n)Depends:[^\n]*/, "&, firmware (>= 15.0)")
+                if (!fontchange && !regionshot && !processguardian && $0 !~ /firmware \(<< 16\.0\)/) sub(/(^|\n)Depends:[^\n]*/, "&, firmware (<< 16.0)")
+                if (fontchange) gsub(/, firmware \(<< 16\.0\)|firmware \(<< 16\.0\), /, "")
+                if (regionshot) {
+                  gsub(/, firmware \(>= 15\.0\)|firmware \(>= 15\.0\), /, "")
+                  gsub(/, firmware \(<< 16\.0\)|firmware \(<< 16\.0\), /, "")
+                }
+              }
+              if (regionshot) {
+                $0 = $0 "\nIcon: https://moxuan1121.github.io/moxuan-repo/depictions/regionshot/icon.png"
+                $0 = $0 "\nSileoDepiction: https://moxuan1121.github.io/moxuan-repo/depictions/regionshot/depiction.json"
+              }
+              if (choicy) {
+                $0 = $0 "\nIcon: https://moxuan1121.github.io/moxuan-repo/depictions/choicy/icon.png"
+                $0 = $0 "\nSileoDepiction: https://moxuan1121.github.io/moxuan-repo/depictions/choicy/depiction.json"
+              }
+              if (jpcallerid) {
+                $0 = $0 "\nIcon: https://moxuan1121.github.io/moxuan-repo/depictions/jpcallerid/icon.png"
+                $0 = $0 "\nSileoDepiction: https://moxuan1121.github.io/moxuan-repo/depictions/jpcallerid/depiction.json"
+              }
+              if (parallelx) {
+                $0 = $0 "\nIcon: https://moxuan1121.github.io/moxuan-repo/depictions/parallelx/icon.png"
+                $0 = $0 "\nSileoDepiction: https://moxuan1121.github.io/moxuan-repo/depictions/parallelx/depiction.json"
+              }
+              print
+            }
+          ' Packages > Packages.new
+          mv Packages.new Packages
+          awk -v RS='' '
+            {
+              count = gsub(/(^|\n)Depends:/, "&")
+              fontchange = $0 ~ /(^|\n)Package: com\.moxuan\.fontchange(\n|$)/
+              regionshot = $0 ~ /(^|\n)Package: com\.moxuan\.regionshot(\n|$)/
+              processguardian = $0 ~ /(^|\n)Package: com\.moxuan\.processguardian(\n|$)/
+              if (count != 1 || (!regionshot && $0 !~ /firmware \(>= 15\.0\)/)) exit 1
+              if (!fontchange && !regionshot && !processguardian && $0 !~ /firmware \(<< 16\.0\)/) exit 1
+              if (fontchange && $0 ~ /firmware \(<< 16\.0\)/) exit 1
+              if (regionshot && $0 ~ /firmware \((>= 15\.0|<< 16\.0)\)/) exit 1
+              if (processguardian && $0 !~ /firmware \(<< 17\.4\)/) exit 1
+            }
+          ' Packages
+          gzip -9fk Packages
+          bzip2 -9fk Packages
+          rm -f Release
+          # ponytail: Sileo has no priority field; remove this invisible prefix if its sorting changes.
+          repo_name="$(printf '\u200a%.0s' {1..15})墨轩插件源"
+          apt-ftparchive \
+            -o APT::FTPArchive::Release::Origin="$repo_name" \
+            -o APT::FTPArchive::Release::Label="$repo_name" \
+            -o APT::FTPArchive::Release::Suite="stable" \
+            -o APT::FTPArchive::Release::Codename="ios" \
+            -o APT::FTPArchive::Release::Architectures="iphoneos-arm iphoneos-arm64 iphoneos-arm64e" \
+            -o APT::FTPArchive::Release::Components="main" \
+            -o APT::FTPArchive::Release::Description="墨轩插件源 · 仅适配 iOS 15 RootHide" \
+            release . > Release.new
+          mv Release.new Release
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add Packages Packages.gz Packages.bz2 Release
+          git diff --cached --quiet || git commit -m "Update package index"
+          git push
