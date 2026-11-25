@@ -86,6 +86,22 @@ Description: 长按图标管理应用数据
 Author: Fouad Raheb
 Name: AppData
 
+Package: com.moxuan.battery27
+Version: 0.2.0
+Architecture: iphoneos-arm64e
+Maintainer: moxuan1121
+Installed-Size: 172
+Depends: firmware (>= 15.0), mobilesubstrate, firmware (<< 16.0)
+Filename: debs/com.moxuan.battery27_0.2.0_iphoneos-arm64e.deb
+Size: 9510
+MD5sum: 449f2bee23eb51cfa00ffcb2ffc15418
+SHA1: e1bb65c544cb3ce95b3b8d2400c07ec25ffb9fa5
+SHA256: fa9aa81660a9fb32523e10d159c09a9de10e85a06a5f32d6775600fdc54fb089
+Section: Tweaks
+Description: 仿 iOS 27 状态栏电池：无描边实心胶囊，电量百分比数字显示在电池图标内。无设置，安装即生效。
+Author: moxuan1121
+Name: 电池27
+
 Package: com.moxuan.cpuoverloadkiller
 Version: 1.0.12
 Architecture: iphoneos-arm64e
