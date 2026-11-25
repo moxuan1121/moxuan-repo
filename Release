@@ -1,0 +1,24 @@
+Architectures: iphoneos-arm iphoneos-arm64 iphoneos-arm64e
+Codename: ios
+Components: main
+Date: Wed, 25 Nov 2026 17:03:26 +0000
+Description: 墨轩插件源 · 仅适配 iOS 15 RootHide
+Label:                墨轩插件源
+Origin:                墨轩插件源
+Suite: stable
+MD5Sum:
+ 00172c091abafd9bab956174f393a5dc            20255 Packages
+ 6bbb174aa0c27614184ccc1b104a061b             6648 Packages.bz2
+ 99bfb5bf76c727f95fbb8b549ec50415             7111 Packages.gz
+SHA1:
+ aa9b593f4d4ad46eae607627cc556aa2c868de77            20255 Packages
+ 9ac58ab63a13a6a9f1708d5e14fd19e4a897574e             6648 Packages.bz2
+ 1754ebcfafe0a0bace94560161c45c6f2eb8e0c2             7111 Packages.gz
+SHA256:
+ 850b5e96e5b4fb71c4855838c1571f86b3c7349a8047b247e68e73bfe0c7501c            20255 Packages
+ 648c4e4a9b7b9e97a3ce235b0b6b061d5db656bc83cc36eb0c6e415110d8e921             6648 Packages.bz2
+ 0ff0d48e3fa9396f760a811395c2a35e343ade30e7c649648ea6830a70663bdb             7111 Packages.gz
+SHA512:
+ 1f832b97a96fed510f94e21bf464b008d33fa13796a5cf8a2c21646da8338317c84f5a18148489efae73f30cba4039dab5bc66c4d96b262a63e547e348edf78e            20255 Packages
+ bf832c2314723881e61e5f5088e7b6a2a303be033b8f387480dff406e2e8719ea07e2707132bddc8146a18eb92a3a7fa816649653fa73e2892ac41e32b045a69             6648 Packages.bz2
+ 5393d1f0508e333db530239a20b076d9f85ba4784e9b886f49197d045d9d0cd1dae7ba46719ca1a8a98d5c88aa17130f7e02ec19da8abcc21dcc1b5ef194b3b3             7111 Packages.gz
