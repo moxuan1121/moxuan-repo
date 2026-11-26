@@ -70,17 +70,17 @@ Author: mox1121
 Name: ShortcutPanel
 
 Package: com.moxuan.appdata
-Version: 2.0.46
+Version: 2.0.47
 Architecture: iphoneos-arm64e
 Maintainer: moxuan
 Depends: firmware (>= 15.0), firmware (<< 16.0), roothide, mobilesubstrate
 Conflicts: com.iosdump.appdata, com.netskao.appdatas, com.netskao.appdata, cn.zqbb.appdata, com.fouadraheb.appdata
 Replaces: com.iosdump.appdata
-Filename: debs/com.moxuan.appdata_2.0.46_iphoneos-arm64e.deb
-Size: 102078
-MD5sum: cc7ff349cabdb016d638e3e3b8277830
-SHA1: 4a764b8155558bc2c7c219a95b20ceb5d561690d
-SHA256: 77c0244a53fe2079bf7b3542c031aa6565c0271cf99919265c744c92b21557b6
+Filename: debs/com.moxuan.appdata_2.0.47_iphoneos-arm64e.deb
+Size: 97210
+MD5sum: bbd73bdc0f635d50039618c02b21d165
+SHA1: d423db6434aa684a82a76c985d66f14c46fc3290
+SHA256: 67e3307701848cdf77afeba0eaf14270f3692c21ce2f93c53e1bd190880e109a
 Section: Tweaks
 Description: 长按图标管理应用数据
 Author: Fouad Raheb
