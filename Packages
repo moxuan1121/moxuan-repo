@@ -243,18 +243,18 @@ Author: Hiraku, moxuan1121
 Name: Keyboard Accio 15 Minimal
 
 Package: com.moxuan.keyboardx
-Version: 0.8.14-fixed
+Version: 0.9.0-fixed
 Architecture: iphoneos-arm64e
 Maintainer: you
 Installed-Size: 92
 Depends: mobilesubstrate, firmware (>= 15.0), firmware (<< 16.0)
 Conflicts: cn.example.kbedittoolbar (<= 0.8.7-fixed)
 Replaces: cn.example.kbedittoolbar (<= 0.8.7-fixed)
-Filename: debs/com.moxuan.keyboardx_0.8.14-fixed_iphoneos-arm64e.deb
-Size: 8636
-MD5sum: 3b185a285b2c875348e7db820093f0f8
-SHA1: 4b809c65615d8651fa234b08f9aacc2ba0b45e41
-SHA256: bf461e04bd67a441da4ab0d6db4260e06f655e1d1cb7c4db3b543c5f9e949b06
+Filename: debs/com.moxuan.keyboardx_0.9.0-fixed_iphoneos-arm64e.deb
+Size: 11762
+MD5sum: 5cebed4b36e7255a986fd9628035589f
+SHA1: b2ba3bd9f717fa802c1e1a472fa02150f5b48974
+SHA256: 35130a02f5c70e015181c6934581ee147f9cccc1bd8aed873ef734176cbc7612
 Section: Tweaks
 Description: Fixed RootHide build using the exact user-supplied KBET profile; no settings bundle or runtime preference access.
 Author: you
