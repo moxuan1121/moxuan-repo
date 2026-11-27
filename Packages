@@ -384,16 +384,16 @@ Icon: https://moxuan1121.github.io/moxuan-repo/depictions/choicy/icon.png
 SileoDepiction: https://moxuan1121.github.io/moxuan-repo/depictions/choicy/depiction.json
 
 Package: com.moxuan1121.clipboard
-Version: 0.1.23
+Version: 0.1.24
 Architecture: iphoneos-arm64e
 Maintainer: moxuan1121
 Installed-Size: 580
 Depends: firmware (>= 15.0), firmware (<< 16.0), mobilesubstrate, preferenceloader
-Filename: debs/com.moxuan1121.clipboard_0.1.23_iphoneos-arm64e.deb
-Size: 70968
-MD5sum: c24e46f0ed0213134015d4c10740cb1e
-SHA1: ed6472a6fd4d06f1dbf2e33d19c141dbe63e237e
-SHA256: ead7af9403029cbb0066a1055054c1bbe2c67a18bba82dc3089277a801bc36f7
+Filename: debs/com.moxuan1121.clipboard_0.1.24_iphoneos-arm64e.deb
+Size: 70704
+MD5sum: 7c4538ad74c9b147dace3899031464c1
+SHA1: ac08217dadd276530e46c72ecd4c48b330241745
+SHA256: cd404aee8a2826f5fe51f4ca631e3adeb22754608dfa58c264cb6a2a1b9b43f0
 Section: Tweaks
 Description: iOS 15 剪贴板历史，保存文字和图片，支持自动粘贴。
 Author: moxuan1121
