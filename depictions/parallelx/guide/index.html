@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ParallelX 使用说明</title>
+<meta name="description" content="ParallelX 使用说明与交互演示：手柄与半圆面板、全部快捷操作的松手与长按细节、分屏窗口手势、角落小窗、边缘返回、键盘与设置速查。">
+<style>
+:root{
+  --bg:#0b1020; --bg2:#111833; --card:#151d3b; --card2:#1b2550; --line:rgba(255,255,255,.09);
+  --text:#e9edf8; --dim:#9aa6c7; --faint:#6c7799; --accent:#5eead4; --accent2:#818cf8; --warn:#fbbf24; --red:#f87171;
+  --blue:#60a5fa; --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#1d2a63 0,transparent 60%),radial-gradient(900px 500px at -10% 30%,#10313a 0,transparent 55%),var(--bg);
+  color:var(--text);font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;}
+a{color:var(--accent)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.hero{padding:28px 0 8px}
+.brand{display:flex;align-items:center;justify-content:space-between;font-size:12px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.brand b{color:var(--accent);font-weight:600}
+.pill{border:1px solid var(--line);border-radius:99px;padding:4px 10px}
+.hero-grid{display:grid;gap:24px;align-items:center;margin-top:18px}
+@media(min-width:820px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+h1{font-size:40px;line-height:1.15;margin:0 0 14px;letter-spacing:-.01em}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--dim);font-size:16px;margin:0 0 16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips a{display:inline-block;text-decoration:none;color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13px}
+.chips a:active{background:rgba(94,234,212,.18)}
+section{padding:34px 0 6px;scroll-margin-top:8px}
+.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin:0 0 4px}
+h2{font-size:26px;margin:0 0 6px}
+h3{font-size:17px;margin:0 0 6px}
+.sub{color:var(--dim);margin:0 0 18px}
+.grid{display:grid;gap:14px}
+@media(min-width:720px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+.card{background:linear-gradient(180deg,var(--card),#121a35);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card p{margin:.3em 0;color:var(--dim)}
+.card p b,.card li b{color:var(--text)}
+.num{display:inline-flex;width:26px;height:26px;border-radius:8px;align-items:center;justify-content:center;background:rgba(94,234,212,.14);color:var(--accent);font-weight:700;font-size:13px;margin-bottom:8px}
+.note{border-left:3px solid var(--warn);background:rgba(251,191,36,.07);padding:10px 14px;border-radius:0 12px 12px 0;color:#f6e7b8;margin:14px 0}
+.tip{border-left:3px solid var(--accent);background:rgba(94,234,212,.06);padding:10px 14px;border-radius:0 12px 12px 0;color:#cdf7ef;margin:14px 0}
+ul.clean{margin:.4em 0 0;padding-left:1.2em}
+ul.clean li{margin:.25em 0;color:var(--dim)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px}
+.kv dt{color:var(--text);font-weight:600;white-space:nowrap}
+.kv dd{margin:0;color:var(--dim)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:600;font-size:12px;letter-spacing:.06em}
+td:first-child{white-space:nowrap;color:var(--text)}
+td{color:var(--dim)}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02)}
+footer{color:var(--faint);font-size:12px;padding:40px 0 60px;text-align:center}
+
+/* ---------- phone ---------- */
+.phone{position:relative;width:300px;height:620px;border-radius:46px;padding:10px;background:linear-gradient(145deg,#2b3254,#141a33);box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 0 0 2px rgba(255,255,255,.08);margin:0 auto;flex:none}
+.screen{position:relative;width:100%;height:100%;border-radius:37px;overflow:hidden;background:linear-gradient(160deg,#3a4a8a,#1e2a55 55%,#162040);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:24px;background:#0a0d1a;border-radius:0 0 16px 16px;z-index:30}
+.status{position:absolute;top:6px;left:22px;right:22px;display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:#fff;z-index:29}
+.homegrid{position:absolute;top:60px;left:22px;right:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px 14px}
+.homegrid i{display:block;aspect-ratio:1;border-radius:13px;background:rgba(255,255,255,.16)}
+.homebar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:110px;height:4px;border-radius:3px;background:rgba(255,255,255,.7);z-index:29}
+.fullapp{position:absolute;inset:0;display:none;flex-direction:column;background:#f2f4f8;color:#1a2033}
+.fullapp .bar{height:76px;padding:34px 18px 0;font-weight:700;font-size:16px;border-bottom:1px solid #dde2ec}
+.fullapp .rows{padding:12px 18px}
+.fullapp .rows i{display:block;height:12px;border-radius:6px;background:#dfe4ee;margin:12px 0}
+.screen.dark .fullapp{background:#14171f;color:#eef}
+.screen.dark .fullapp .bar{border-color:#2a2f3c}
+.screen.dark .fullapp .rows i{background:#262c3a}
+
+/* split card in simulator */
+.s-split{position:absolute;right:8px;top:150px;width:176px;height:330px;border-radius:20px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;overflow:hidden;color:#1a2033;transition:transform .35s,opacity .35s}
+.s-split .t{display:flex;justify-content:center;margin-top:6px}
+.s-split .t span{font-size:9px;background:rgba(0,0,0,.06);border-radius:8px;padding:2px 8px}
+.s-split .c{padding:12px}
+.s-split .c i{display:block;height:9px;border-radius:5px;background:#e4e8f0;margin:9px 0}
+.s-split .b{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:56px;height:4px;border-radius:2px;background:rgba(0,0,0,.25)}
+.screen.dark .s-split{background:#1c2130;color:#eef}
+.screen.dark .s-split .c i{background:#2b3244}
+.s-docks{position:absolute;right:6px;top:62px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.s-docks div{width:52px;height:96px;border-radius:12px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.35);font-size:8px;color:#333;display:flex;align-items:flex-start;justify-content:center;padding-top:6px}
+.s-handle{position:absolute;right:0;width:9px;height:64px;border-radius:6px 0 0 6px;background:rgba(255,255,255,.75);box-shadow:0 0 0 1px rgba(0,0,0,.08);z-index:20;transform:translateY(-50%)}
+.s-handle::after{content:"";position:absolute;left:3px;top:50%;width:3px;height:22px;transform:translateY(-50%);border-radius:2px;background:rgba(20,30,60,.55)}
+.s-shade{position:absolute;inset:0;background:rgba(5,8,20,.0);transition:background .2s;z-index:15;pointer-events:none}
+.s-icon{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;z-index:16;transition:transform .12s;box-shadow:0 4px 10px rgba(0,0,0,.3);pointer-events:none}
+.s-icon.sym{background:rgba(255,255,255,.82);color:#1d2645;border-radius:50%}
+.s-icon.lit{background:#3b82f6;color:#fff}
+.s-icon.sel{transform:scale(1.18);box-shadow:0 0 0 3px rgba(94,234,212,.85),0 4px 12px rgba(0,0,0,.35)}
+.s-icon small{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);font-size:8px;color:#fff;white-space:nowrap;text-shadow:0 1px 2px #000}
+.s-preview{position:absolute;left:24px;top:50%;width:70px;height:70px;margin-top:-35px;border-radius:22px;background:rgba(255,255,255,.85);display:none;align-items:center;justify-content:center;font-size:34px;z-index:17;color:#1d2645;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.s-ring{position:absolute;inset:-6px;border-radius:26px;border:3px solid transparent;border-top-color:var(--accent);animation:spin 1s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.s-glow{position:absolute;inset:6px;border-radius:32px;border:5px solid rgba(59,130,246,.9);box-shadow:0 0 22px rgba(59,130,246,.8) inset,0 0 18px rgba(59,130,246,.6);opacity:0;transition:opacity .2s;z-index:14;pointer-events:none}
+.s-bright{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:92px;height:236px;border-radius:26px;background:rgba(255,255,255,.88);display:none;z-index:18;color:#1d2645;text-align:center;font-size:11px}
+.s-bright .tr{position:absolute;left:26px;top:46px;width:40px;height:150px;border-radius:20px;background:rgba(0,0,0,.12);overflow:hidden}
+.s-bright .fl{position:absolute;left:0;right:0;bottom:0;background:#1d2645}
+.s-bright .sun{margin-top:14px;font-size:20px}
+.s-bright .pc{position:absolute;bottom:12px;left:0;right:0}
+.s-dim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:28;transition:opacity .1s}
+.s-sel{position:absolute;inset:0;display:none;z-index:19;background:rgba(10,14,30,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.s-sel .hd{position:absolute;left:24px;top:58px;font-size:46px;font-weight:300;color:#fff}
+.s-sel .rail{position:absolute;right:12px;top:70px;bottom:70px;width:22px}
+.s-sel .rail span{position:absolute;right:0;width:22px;text-align:center;font-size:10px;color:rgba(255,255,255,.55);transform:translateY(-50%)}
+.s-sel .rail span.on{color:var(--accent);font-weight:700;font-size:13px}
+.s-sel .gridapps{position:absolute;left:14px;right:60px;top:128px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.s-sel .gridapps div{height:64px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;color:#dfe6ff;gap:4px}
+.s-sel .gridapps div i{width:30px;height:30px;border-radius:9px;display:block}
+.s-sel .gridapps div.on{background:rgba(96,165,250,.18)}
+.s-sel .gridapps div.on i{transform:scale(1.25)}
+.s-sel .lock{position:absolute;left:24px;top:110px;font-size:10px;color:var(--warn)}
+.s-group{position:absolute;width:170px;border-radius:16px;background:rgba(255,255,255,.95);color:#1d2645;display:none;z-index:19;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.4);font-size:12px}
+.s-group div{padding:9px 12px;border-bottom:1px solid #e6e9f2}
+.s-group div.on{background:rgba(59,130,246,.16);color:#2563eb}
+.s-group div.cancel{color:#dc2626;text-align:center;border-bottom:0}
+.s-group div.cancel.on{background:rgba(220,38,38,.12)}
+.s-search{position:absolute;left:10px;right:10px;bottom:12px;height:250px;border-radius:20px;background:rgba(255,255,255,.92);display:none;z-index:19;color:#1d2645;padding:12px;font-size:12px}
+.s-search .f{background:#e8ebf3;border-radius:10px;padding:8px 10px;color:#8a93ad}
+.s-search .r{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.s-search .r span{background:#f0f2f8;border-radius:10px;padding:10px;display:flex;gap:6px;align-items:center}
+.s-search .r span i{width:16px;height:16px;border-radius:5px;display:inline-block}
+.s-finger{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:rgba(255,120,180,.55);border:2px solid rgba(255,255,255,.8);z-index:40;display:none;pointer-events:none}
+.s-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:27}
+.s-toast{position:absolute;left:14px;right:14px;top:34px;border-radius:14px;background:rgba(15,20,40,.86);color:#fff;font-size:11px;padding:8px 10px;z-index:35;opacity:0;transition:opacity .25s;text-align:center}
+.s-rec{display:none;color:#f87171}
+.s-lock{display:none}
+.s-back{position:absolute;inset:0;z-index:26;display:none;background:rgba(0,0,0,.35);color:#fff;font-size:12px;text-align:center;padding-top:250px}
+
+.sim{display:grid;gap:18px;align-items:start}
+@media(min-width:860px){.sim{grid-template-columns:320px 1fr}}
+.panelbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.live{font-size:14px}
+.live .k{color:var(--faint);font-size:12px;letter-spacing:.08em}
+.live .v{font-size:16px;color:var(--text);min-height:1.6em}
+.live .will{font-size:15px;color:var(--accent);min-height:3.2em}
+.live .res{font-size:14px;color:#cfe0ff;background:rgba(96,165,250,.08);border-radius:12px;padding:10px 12px;min-height:2.8em}
+.bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;margin:6px 0 2px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.seg button{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px}
+.seg button.on{background:rgba(94,234,212,.16);border-color:rgba(94,234,212,.5);color:var(--accent)}
+input[type=range]{width:100%;accent-color:#5eead4}
+.howto{counter-reset:s;list-style:none;padding:0;margin:8px 0 0}
+.howto li{counter-increment:s;position:relative;padding-left:30px;margin:6px 0;color:var(--dim);font-size:14px}
+.howto li::before{content:counter(s);position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:6px;background:rgba(129,140,248,.2);color:var(--accent2);font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* shortcut cards */
+.sc{display:grid;grid-template-columns:44px 1fr;gap:12px}
+.sc .ic{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;background:rgba(255,255,255,.9);color:#1d2645}
+.sc .ic.app{color:#fff}
+.sc h3{margin-top:2px}
+.act{display:grid;grid-template-columns:62px 1fr;gap:4px 10px;margin-top:8px;font-size:14px}
+.act .tag{font-size:12px;border-radius:7px;padding:2px 0;text-align:center;height:fit-content;font-weight:600}
+.tag.tap{background:rgba(94,234,212,.14);color:var(--accent)}
+.tag.hold{background:rgba(129,140,248,.18);color:#a5b4fc}
+.tag.no{background:rgba(255,255,255,.06);color:var(--faint)}
+.act .d{color:var(--dim)}
+.act .d b{color:var(--text)}
+
+/* window map */
+.map{position:relative;width:300px;height:470px;margin:0 auto}
+.map .win{position:absolute;left:70px;top:95px;width:160px;height:280px;border-radius:22px;background:linear-gradient(180deg,#f5f7fb,#e3e8f2);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.map .win::after{content:"";position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:50px;height:4px;border-radius:2px;background:rgba(0,0,0,.25)}
+.zone{position:absolute;border:2px dashed rgba(94,234,212,.55);background:rgba(94,234,212,.08);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--accent);text-align:center;line-height:1.25;transition:background .15s}
+.zone.on{background:rgba(94,234,212,.28);border-style:solid}
+.zone.c{border-radius:50%;width:46px;height:46px;font-size:10px;border-color:rgba(129,140,248,.7);color:#c7d2fe;background:rgba(129,140,248,.12)}
+.zone.c.on{background:rgba(129,140,248,.35)}
+.zone.e{border-color:rgba(251,191,36,.7);color:var(--warn);background:rgba(251,191,36,.1);border-radius:6px;writing-mode:vertical-rl;font-size:10px}
+.zone.e.on{background:rgba(251,191,36,.3)}
+.zone.content{border-color:rgba(255,255,255,.25);color:#475069;background:transparent}
+.zone.content.on{background:rgba(255,255,255,.12)}
+.zdetail h3{margin-top:0}
+
+/* looping demos */
+.demo{position:relative;width:220px;height:400px;border-radius:34px;padding:8px;background:linear-gradient(145deg,#2b3254,#141a33);margin:0 auto 10px;flex:none}
+.demo .scr{position:relative;width:100%;height:100%;border-radius:27px;overflow:hidden;background:linear-gradient(160deg,#3a4a8a,#1e2a55 55%,#162040)}
+.demo .fing{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:rgba(255,120,180,.55);border:2px solid rgba(255,255,255,.8);z-index:9}
+.demo .cap{position:absolute;left:8px;right:8px;bottom:10px;font-size:10px;text-align:center;color:#fff;background:rgba(0,0,0,.45);border-radius:10px;padding:5px}
+.d-dock .w{position:absolute;right:10px;top:50px;width:72px;height:132px;border-radius:14px;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.4);animation:dockW 6s infinite}
+.d-dock .ic{position:absolute;right:0;top:84px;width:36px;height:36px;border-radius:10px 0 0 10px;background:rgba(255,255,255,.85);opacity:0;animation:dockI 6s infinite;display:flex;align-items:center;justify-content:center;font-size:16px}
+.d-dock .fing{animation:dockF 6s infinite}
+@keyframes dockW{0%,18%{transform:none;opacity:1}30%,62%{transform:translateX(60px) scale(.5);opacity:0}75%,100%{transform:none;opacity:1}}
+@keyframes dockI{0%,22%{opacity:0}32%,62%{opacity:1}70%,100%{opacity:0}}
+@keyframes dockF{0%{left:140px;top:120px;opacity:0}8%{opacity:1;left:140px;top:120px}22%{left:196px;top:120px;opacity:1}26%{opacity:0}48%{opacity:0;left:190px;top:102px}52%{opacity:1;left:190px;top:102px}60%{opacity:1;left:190px;top:102px;transform:scale(.8)}64%{opacity:0;transform:none}100%{opacity:0}}
+.d-back .pg{position:absolute;inset:0;background:#f2f4f8;animation:backP 5s infinite}
+.d-back .pg2{position:absolute;inset:0;background:#e8f5ee;animation:backQ 5s infinite}
+.d-back .pg b,.d-back .pg2 b{display:block;padding:30px 14px 10px;font-size:12px;color:#1d2645;border-bottom:1px solid #dde2ec}
+.d-back .edge{position:absolute;right:0;top:15%;bottom:15%;width:12px;background:rgba(251,191,36,.25);border-left:1px dashed rgba(251,191,36,.9)}
+.d-back .fing{animation:backF 5s infinite}
+@keyframes backP{0%,40%{transform:none}55%,85%{transform:translateX(100%)}100%{transform:none}}
+@keyframes backQ{0%,40%{transform:translateX(-30%)}55%,85%{transform:none}100%{transform:translateX(-30%)}}
+@keyframes backF{0%,10%{left:206px;top:200px;opacity:0}15%{opacity:1;left:206px}38%{left:140px;opacity:1}44%{opacity:0;left:130px}100%{opacity:0}}
+.d-open .panel{position:absolute;right:-90px;top:110px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.13);animation:openP 6s infinite}
+.d-open .h{position:absolute;right:0;top:186px;width:7px;height:44px;border-radius:5px 0 0 5px;background:rgba(255,255,255,.8)}
+.d-open .ico{position:absolute;width:26px;height:26px;border-radius:8px;opacity:0;animation:openI 6s infinite}
+.d-open .sp{position:absolute;right:8px;top:90px;width:110px;height:210px;border-radius:14px;background:#fff;opacity:0;animation:openS 6s infinite}
+.d-open .fing{animation:openF 6s infinite}
+@keyframes openP{0%,8%{transform:scale(.2);opacity:0}25%,55%{transform:none;opacity:1}62%,100%{opacity:0;transform:scale(.2)}}
+@keyframes openI{0%,15%{opacity:0}25%,55%{opacity:1}60%,100%{opacity:0}}
+@keyframes openS{0%,60%{opacity:0;transform:scale(.8)}70%,92%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes openF{0%{left:206px;top:208px;opacity:0}6%{opacity:1;left:206px;top:208px}24%{left:150px;top:208px}40%{left:142px;top:168px}55%{left:142px;top:168px;opacity:1}60%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span><b>ParallelX</b> · 使用说明</span><span class="pill">0.1.0 · iOS 15 RootHide</span></div>
+  <div class="hero-grid">
+    <div>
+      <h1>从右边缘拉出来，<br><em>一边用一边开。</em></h1>
+      <p class="lead">从屏幕右边缘的手柄向内拉，出现半圆面板。滑到图标松手，应用就在分屏窗口里打开。停留到设定时长再松手就是全屏，不少快捷操作长按还有另一套用法。</p>
+      <ul class="chips">
+        <li><a href="#start">快速开始</a></li><li><a href="#panel">交互演示</a></li><li><a href="#shortcuts">快捷操作 · 松手与长按</a></li>
+        <li><a href="#window">分屏窗口手势</a></li><li><a href="#dock">角落小窗</a></li><li><a href="#back">边缘返回</a></li>
+        <li><a href="#keyboard">键盘</a></li><li><a href="#external">外部打开与系统</a></li><li><a href="#settings">设置速查</a></li><li><a href="#faq">常见问题</a></li>
+      </ul>
+    </div>
+    <div class="demo d-open" aria-hidden="true"><div class="scr">
+      <div class="panel"></div><div class="h"></div>
+      <div class="ico" style="right:58px;top:150px;background:#22c55e"></div>
+      <div class="ico" style="right:70px;top:190px;background:#3b82f6"></div>
+      <div class="ico" style="right:58px;top:230px;background:#f59e0b"></div>
+      <div class="sp"></div><div class="fing"></div>
+      <div class="cap">向内拉手柄 → 滑到图标 → 松手进入分屏</div>
+    </div></div>
+  </div>
+</header>
+
+<section id="start">
+  <p class="eyebrow">01 · First steps</p>
+  <h2>三个入口，先记住这些</h2>
+  <p class="sub">所有操作都从屏幕右边缘的手柄开始。打开的应用要么在分屏窗口里，要么缩成角落小窗。</p>
+  <div class="grid g3">
+    <div class="card"><span class="num">1</span><h3>手柄与半圆面板</h3><p>右边缘的细长手柄。<b>向内拉</b>出半圆面板，<b>上下拖</b>调整手柄位置。面板最多四环，放应用和快捷操作。</p></div>
+    <div class="card"><span class="num">2</span><h3>分屏窗口</h3><p>应用在浮于当前界面之上的窗口里运行。窗口上方、下方和四个角都有手势区，可以移动、缩放、停靠、全屏、返回。</p></div>
+    <div class="card"><span class="num">3</span><h3>角落小窗</h3><p>分屏可以缩成贴边的小窗，最多同时保留 4 个。小窗还能再收成图标，轻点就恢复。</p></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>第一次使用</h3>
+    <ol class="howto">
+      <li>打开 <b>设置 → ParallelX</b>，确认“启用 ParallelX”已打开。</li>
+      <li>进入“应用、快捷操作与排序”，添加想放进面板的应用和快捷操作，拖动右侧手柄排序。</li>
+      <li>从屏幕右边缘的手柄向内拉，面板展开后手指不要离开屏幕。</li>
+      <li>滑到图标上松手：应用进入分屏窗口。停留到出现蓝色光框再松手：全屏打开。</li>
+    </ol>
+  </div>
+</section>
+
+<section id="panel">
+  <p class="eyebrow">02 · Live demo</p>
+  <h2>交互演示：自己拉一次</h2>
+  <p class="sub">在演示手机的屏幕上按住右边缘的手柄，向左拉开面板，滑到图标上停住或松手。旁边的面板实时显示<b>现在松手会发生什么</b>。演示只在网页里运行，不会控制设备。</p>
+  <div class="sim">
+    <div class="phone"><div class="screen" id="scr">
+      <div class="notch"></div>
+      <div class="status"><span>9:41 <span class="s-rec" id="recDot">● 录制中</span></span><span><span class="s-lock" id="lockIc">🔒 </span>▮▮▮ 100%</span></div>
+      <div class="homegrid" id="home"></div>
+      <div class="fullapp" id="full"><div class="bar" id="fullName">Safari</div><div class="rows"><i></i><i style="width:70%"></i><i></i><i style="width:55%"></i><i></i><i style="width:80%"></i></div></div>
+      <div class="s-docks" id="docks"></div>
+      <div class="s-split" id="split"><div class="t"><span id="splitName">备忘录</span></div><div class="c"><i></i><i style="width:60%"></i><i></i><i style="width:75%"></i><i></i></div><div class="b"></div></div>
+      <div class="s-glow" id="glow"></div>
+      <div class="s-shade" id="shade"></div>
+      <div id="icons"></div>
+      <div class="s-preview" id="preview"><span id="pvi"></span><div class="s-ring" id="ring"></div></div>
+      <div class="s-bright" id="bright"><div class="sun">☀︎</div><div class="tr"><div class="fl" id="brightFill"></div></div><div class="pc" id="brightPc">亮度 50%</div></div>
+      <div class="s-sel" id="sel"><div class="hd" id="selHd"></div><div class="lock" id="selLock"></div><div class="gridapps" id="selGrid"></div><div class="rail" id="rail"></div></div>
+      <div class="s-group" id="group"></div>
+      <div class="s-search" id="search"><div class="f">搜索应用</div><div class="r"><span><i style="background:#22c55e"></i>微信</span><span><i style="background:#3b82f6"></i>Safari</span><span><i style="background:#f59e0b"></i>备忘录</span><span><i style="background:#ef4444"></i>音乐</span></div><p style="margin:10px 0 0;color:#6b7280">输入名称或标识过滤 · 点结果在分屏打开 · 回车打开第一个 · 点空白处关闭</p></div>
+      <div class="s-back" id="backrec">录入返回按钮<br>点当前页面返回按钮的位置<br><br><span style="opacity:.7">（点手机任意处关闭演示）</span></div>
+      <div class="s-handle" id="handle"></div>
+      <div class="s-dim" id="dim"></div>
+      <div class="s-flash" id="flash"></div>
+      <div class="s-toast" id="toast"></div>
+      <div class="s-finger" id="finger"></div>
+      <div class="homebar"></div>
+    </div></div>
+    <div>
+      <div class="panelbox live">
+        <div class="k">当前选中</div><div class="v" id="liveSel">按住右边缘手柄，向左拉</div>
+        <div class="k">已停留</div><div class="bar"><i id="liveBar"></i></div><div style="font-size:12px;color:var(--faint)" id="liveTime">0.00 / 0.70 秒</div>
+        <div class="k" style="margin-top:8px">现在松手会</div><div class="will" id="liveWill">—</div>
+        <div class="k">上一次结果</div><div class="res" id="liveRes">还没有操作</div>
+      </div>
+      <div class="panelbox" style="margin-top:12px">
+        <div style="font-size:13px;color:var(--dim)">演示场景（影响“切换全屏/分屏”“重新打开应用”等的结果）</div>
+        <div class="seg" id="segFull"><button data-v="">在主屏</button><button data-v="Safari" class="on">前台：Safari</button></div>
+        <div class="seg" id="segSplit"><button data-v="" class="on">没有分屏</button><button data-v="备忘录">分屏：备忘录</button></div>
+        <label style="font-size:13px;color:var(--dim)">长按全屏时长：<b id="holdLbl" style="color:var(--text)">700 毫秒</b>（设置范围 300–2000，默认 700）</label>
+        <input type="range" id="hold" min="300" max="2000" step="50" value="700">
+        <div class="seg"><button id="reset">重置演示</button></div>
+      </div>
+      <div class="tip">手指上下拖手柄（而不是向左拉）会移动手柄位置，范围在屏幕高度的 22%–78% 之间。手柄太靠上或太靠下时，放不下的外环会被省略。</div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>面板的打开与选择</h3><ul class="clean">
+      <li>向内拉过 <b>手柄滑动距离</b>（默认 120 pt）的 80% 时面板完全展开，之后才能选图标。</li>
+      <li>先上下移动超过 5 pt 就是<b>移动手柄</b>，先左右移动就是<b>打开面板</b>，一次手势只做一种。</li>
+      <li>滑到图标会轻震一下，图标放大，左侧出现大图预览；可长按的项目到时长会<b>再震一次</b>。</li>
+      <li><b>换到另一个图标会重新计时</b>；在空白处松手面板收回，什么都不做。</li>
+      <li>环数默认 3 / 5 / 7 / 9 个；某一环设为 0 会关闭它和它外面所有的环。</li>
+    </ul></div>
+    <div class="card"><h3>长按的三种结果</h3><ul class="clean">
+      <li><b>松手生效型</b>：应用、最近应用、截屏、切换全屏/分屏。到时长只震动（应用还会出现蓝色光框），<b>松手时</b>才决定执行哪一个动作。</li>
+      <li><b>展开型</b>：调节亮度、搜索、快捷指令集合。到时长立即切换到亮度条、字母索引或集合列表，手指继续拖动选择。</li>
+      <li><b>没有长按</b>：其余快捷操作。停留多久，松手都只执行一次轻触动作。</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="shortcuts">
+  <p class="eyebrow">03 · Shortcuts</p>
+  <h2>快捷操作：松手与长按的全部细节</h2>
+  <p class="sub">“松手”是滑到图标上直接松手；“长按”是停在图标上达到“长按全屏时长”（默认 0.70 秒）之后的行为。所有动作都在面板收起后才执行。</p>
+  <div class="grid g2" id="scList"></div>
+  <div class="card" style="margin-top:14px"><h3>自定义快捷操作</h3><ul class="clean">
+    <li>在“应用、快捷操作与排序”里<b>长按</b>快捷操作：可设 SF Symbols 图标、从照片或文件选择图标、恢复默认图标。</li>
+    <li>“最近打开的应用”长按可设显示几个（1–20），每个占面板上的一个位置。</li>
+    <li>“添加 URL”最多 10 个，填名称和带协议的地址（https:// 或应用的 URL Scheme）；长按可编辑。</li>
+    <li>“添加快捷指令”可选单个，也可把多个组成<b>集合</b>；“添加应用快捷方式”读取应用图标的 3D Touch 菜单。</li>
+    <li>“搜索台收藏”决定字母索引最下方 ★ 里的内容，可放应用、快捷操作、应用快捷方式和快捷指令。</li>
+  </ul></div>
+</section>
+
+<section id="window">
+  <p class="eyebrow">04 · Split window</p>
+  <h2>分屏窗口：按区域记手势</h2>
+  <p class="sub">点下图中的区域查看手势。手势区位于窗口上方、下方和四个圆角上，大小会随窗口缩放按比例变化。</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="map" id="map">
+      <div class="win"></div>
+      <div class="zone" data-z="top" style="left:85px;top:40px;width:130px;height:48px">顶部区域</div>
+      <div class="zone c" data-z="tl" style="left:48px;top:72px">左上角</div>
+      <div class="zone c" data-z="tr" style="left:206px;top:72px">右上角</div>
+      <div class="zone content" data-z="content" style="left:92px;top:150px;width:100px;height:160px">应用内容</div>
+      <div class="zone e" data-z="edge" style="left:212px;top:150px;width:16px;height:170px">返回条</div>
+      <div class="zone c" data-z="bl" style="left:48px;top:352px">左下角</div>
+      <div class="zone c" data-z="br" style="left:206px;top:352px">右下角</div>
+      <div class="zone" data-z="bottom" style="left:85px;top:382px;width:130px;height:52px">底部区域</div>
+    </div>
+    <div class="card zdetail" id="zdetail"></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>底部手势动作（可在“手势区域”里逐项更改）</h3>
+    <div class="tbl"><table><thead><tr><th>手势</th><th>默认动作</th></tr></thead><tbody>
+      <tr><td>上滑</td><td>停靠右侧小窗</td></tr><tr><td>下滑</td><td>复位（已在初始位置时全屏）</td></tr>
+      <tr><td>左滑</td><td>切换上一个应用</td></tr><tr><td>右滑</td><td>返回上一层</td></tr>
+      <tr><td>双击</td><td>关闭分屏</td></tr><tr><td>长按</td><td>全屏打开</td></tr>
+    </tbody></table></div>
+    <p style="color:var(--dim);margin:10px 0 0">可选动作：返回上一层、切换上一个应用、停靠右侧小窗、停靠左侧小窗、复位（在初始位置时全屏）、全屏打开、关闭分屏、关闭分屏并结束后台、无。</p>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>打开新应用时</h3><ul class="clean">
+      <li>已有分屏时再打开别的应用：当前分屏自动<b>缩成右侧小窗</b>（“新开分屏时当前窗口变小窗”，默认开启；关闭则直接关掉）。</li>
+      <li>新窗口<b>沿用原窗口的大小和位置</b>，不会跳回初始位置。</li>
+      <li>打开的应用就是当前全屏应用时，它会从全屏转进窗口。</li>
+      <li>冷启动的应用先显示启动图或图标，加载完成前窗口内不能点击，但可以拖动和缩放。</li>
+    </ul></div>
+    <div class="card"><h3>复位与全屏</h3><ul class="clean">
+      <li><b>复位</b>：窗口回到初始位置和初始大小。</li>
+      <li>窗口<b>已经在初始位置</b>时再复位，会改为全屏打开该应用。</li>
+      <li>应用仍在冷启动加载时，下滑复位只复位，不会全屏。</li>
+      <li>初始位置默认靠右、距右边缘 12 pt；可开启“竖屏分屏固定居中”。</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="dock">
+  <p class="eyebrow">05 · Corner windows</p>
+  <h2>角落小窗与图标</h2>
+  <p class="sub">小窗贴在屏幕左右两侧，浮在控制中心之上。可见的小窗还能收成图标。</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="demo d-dock" aria-hidden="true"><div class="scr">
+        <div class="w"></div><div class="ic">▦</div><div class="fing"></div>
+        <div class="cap">向外滑收成图标 · 轻点图标展开</div>
+      </div></div>
+    </div>
+    <div class="card">
+      <h3>可见小窗</h3>
+      <div class="act">
+        <span class="tag tap">轻点</span><span class="d">恢复为分屏。已有分屏时两者<b>交换</b>：小窗变分屏，原分屏缩进它的位置。会自动收起控制中心。</span>
+        <span class="tag hold">长按拖动</span><span class="d">长按拿起小窗，可拖到任意位置；松手吸附到较近一侧，保持松手时的高度。</span>
+        <span class="tag tap">上滑</span><span class="d">关闭这个小窗。</span>
+        <span class="tag tap">下滑</span><span class="d">全屏打开这个应用。</span>
+        <span class="tag tap">向内滑</span><span class="d">换到屏幕另一侧。</span>
+        <span class="tag tap">向外滑</span><span class="d">收纳为贴边图标。</span>
+      </div>
+      <h3 style="margin-top:14px">收纳后的图标</h3>
+      <div class="act">
+        <span class="tag tap">轻点</span><span class="d">展开回小窗。</span>
+        <span class="tag tap">拖动</span><span class="d">换边、调整与其他小窗的顺序，松手后自动吸附补位。</span>
+        <span class="tag tap">快速上滑</span><span class="d">回到这一侧的最上方。</span>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px"><ul class="clean">
+    <li><b>进入小窗</b>：分屏顶部左/右角轻点；底部上滑（默认右侧）；“切换全屏/分屏”快捷操作；新开分屏时旧窗口自动变小窗。</li>
+    <li><b>数量</b>：最多保留 1–4 个（默认 2），再多时最早的小窗会被关闭。</li>
+    <li><b>自动收纳</b>：每个小窗独立计时，到时自动变成图标；0 秒为关闭，最长 120 秒。</li>
+    <li><b>宽度</b>：竖屏应用与横屏应用分别设置（默认 110 pt）。</li>
+  </ul></div>
+</section>
+
+<section id="back">
+  <p class="eyebrow">06 · Edge back</p>
+  <h2>边缘返回与录入返回按钮</h2>
+  <p class="sub">不注入任何应用，通过系统辅助功能让应用返回上一层。</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="demo d-back" aria-hidden="true"><div class="scr">
+      <div class="pg2"><b>上一页</b></div><div class="pg"><b>当前页面</b></div><div class="edge"></div><div class="fing"></div>
+      <div class="cap">从右边缘向内滑 → 返回上一层</div>
+    </div></div>
+    <div class="card"><ul class="clean">
+      <li><b>全屏应用</b>：从屏幕右边缘约 20 pt 内起手（高度 15%–85% 之间，避开控制中心和主屏指示条），向内水平滑动约 40 pt 即返回。</li>
+      <li><b>分屏窗口</b>：从窗口内侧右边缘的返回条向内滑，只返回分屏里的应用。返回条宽度和高度可调（默认 20 pt、70%）。</li>
+      <li>手指刚向内移动约 8 pt 就接管触摸，应用自己的左右滑动（列表侧滑、翻页）不会同时被触发。</li>
+      <li>不会触发的位置：手柄及其周围 24 pt、面板、小窗、分屏窗口四角；RegionShot 冻结截图时；黑名单里的应用（全屏和分屏都生效）。</li>
+      <li>只用一根手指：第二根手指落下即取消。</li>
+    </ul></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>返回不生效的应用：录入返回按钮</h3><ol class="howto">
+    <li>把“录入返回按钮”加入面板，打开到应用里有返回按钮的页面。</li>
+    <li>从面板选择它，屏幕出现录入层；<b>点一下返回按钮的位置</b>。点在分屏窗口上录给分屏应用，其他位置录给全屏应用。</li>
+    <li>横屏、竖屏分别录。同一应用每个方向最多 12 个位置，不同页面位置或样式不同的返回按钮可以分别录。</li>
+    <li>点“清除录入”后再点某个应用，会清除它的全部录入；“取消”退出。</li>
+  </ol><p>返回时先按录入的位置；如果这个位置上的控件和录入时不一样（例如首页同一位置是设置按钮），就不会按，改用应用自带的返回方式。如果按了之后页面没有变化，会自动再按一次。</p></div>
+</section>
+
+<section id="keyboard">
+  <p class="eyebrow">07 · Keyboard</p>
+  <h2>键盘：外置与内置</h2>
+  <p class="sub">横屏和竖屏分别选择。默认竖屏用外置键盘，横屏用内置键盘。</p>
+  <div class="grid g2">
+    <div class="card"><h3>外置键盘</h3><ul class="clean">
+      <li>键盘显示在分屏外的屏幕底部，窗口不放大。</li>
+      <li>横屏时可调键盘的左右位置（从左到右）。</li>
+      <li>分屏外加一层可调深度的遮罩（默认 0.12，范围 0–0.6），<b>双击遮罩关闭分屏</b>（可关闭）。</li>
+      <li>下拉控制中心、通知中心时，键盘和分屏一起被盖住。</li>
+    </ul></div>
+    <div class="card"><h3>内置键盘</h3><ul class="clean">
+      <li>键盘留在分屏窗口里，输入时窗口放大，默认 160%（100% 为不放大，最大 200%）。</li>
+      <li>竖屏主屏里的竖屏分屏：放大后水平居中、底部对齐。</li>
+      <li>横屏分屏围绕原中心放大；横屏主屏里的横屏分屏放大后固定在右下方。</li>
+      <li>可选择是否显示遮罩。主屏竖屏时，横屏分屏固定使用内置键盘。</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="external">
+  <p class="eyebrow">08 · Routing & system</p>
+  <h2>外部打开与系统整合</h2>
+  <div class="grid g2">
+    <div class="card"><h3>通知与链接</h3><ul class="clean">
+      <li><b>通知横幅跳转分屏</b>：点击顶部通知横幅，目标应用在分屏打开，横幅随即收起。</li>
+      <li>在通知中心或锁屏上点通知，仍按系统方式全屏打开。</li>
+      <li><b>URL 跳转分屏</b>：其他应用里的链接把目标应用放进分屏。</li>
+      <li>在 <b>URL 分屏黑名单</b> 中的应用仍全屏打开，同时关闭当前分屏。</li>
+      <li>分屏应用里打开链接回到当前全屏应用时，分屏会自动关闭。</li>
+    </ul></div>
+    <div class="card"><h3>系统</h3><ul class="clean">
+      <li><b>锁屏时清理分屏和小窗</b>：开启后锁屏关闭所有窗口；默认关闭，解锁后恢复原样。</li>
+      <li><b>截图/录屏中隐藏手柄和面板</b>：设备上仍正常显示，不隐藏分屏和键盘。</li>
+      <li><b>允许分屏应用调用相机</b>：默认关闭；首次安装后需重启设备一次。</li>
+      <li><b>备份与恢复</b>：导出全部设置为 plist 文件；恢复后各项设置立即生效。</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="settings">
+  <p class="eyebrow">09 · Reference</p>
+  <h2>设置速查（默认值与范围）</h2>
+  <div class="tbl"><table><thead><tr><th>设置项</th><th>默认</th><th>范围 / 说明</th></tr></thead><tbody id="setTbl"></tbody></table></div>
+</section>
+
+<section id="faq">
+  <p class="eyebrow">10 · FAQ</p>
+  <h2>常见问题</h2>
+  <div class="grid g2" id="faqList"></div>
+</section>
+
+<footer>ParallelX 使用说明 · 适配 0.1.0~alpha466 · 页面中的手机画面是示意动画，不是实机录屏</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+
+/* ---------------- shortcut catalogue (cards) ---------------- */
+var SC=[
+ {n:"应用图标",g:"A",app:"#22c55e",tap:"在<b>分屏窗口</b>打开。已在分屏中 → 转为全屏；已是角落小窗 → 恢复为分屏；已有其他分屏 → 它先缩成右侧小窗，新应用沿用它的大小和位置。",hold:"停留到时长会震一下，屏幕边缘出现<b>蓝色光框</b>，此时松手 → <b>全屏打开</b>（当前分屏会先关闭）。光框出现前松手仍是分屏；换图标重新计时。"},
+ {n:"最近打开的应用",g:"◷",tap:"在面板里展开成 1–20 个位置，按最近使用顺序填入应用，跳过面板里已有的应用和电话界面。滑到某个位置松手 → 分屏打开。没有可用应用时显示“最近应用为空”，松手无动作。",hold:"与应用图标相同：到时长出现蓝色光框，松手全屏打开。"},
+ {n:"切换全屏/分屏",g:"❐",tap:"<b>有分屏且前台是全屏应用</b> → 两者交换（分屏应用变全屏，原全屏应用进分屏）。<b>有分屏、在主屏</b> → 分屏缩成右侧小窗。<b>没有分屏、前台是全屏应用</b> → 把它直接缩成右侧小窗。主屏且没有分屏 → 无动作。",hold:"到时长震一下，再松手：<b>有分屏</b> → 分屏应用转为全屏；<b>没有分屏</b> → 当前全屏应用放进分屏窗口。"},
+ {n:"截屏",g:"⌗",tap:"系统截屏，保存到照片。面板先收起，不会截到面板。",hold:"到时长震一下，再松手 → <b>只复制到剪贴板</b>，不保存到照片。"},
+ {n:"调节亮度",g:"☀︎",tap:"无动作（必须长按）。",hold:"到时长弹出亮度条。手指<b>不松开，上下拖动</b>调节，向上变亮；拖过约屏幕高度 40% 的距离可从 0% 调到 100%。松手关闭面板，亮度保留。"},
+ {n:"搜索",g:"⌕",tap:"打开搜索台并弹出键盘：按应用名称或标识过滤，结果两列显示；点结果在分屏打开，键盘回车打开第一个结果，点空白处关闭。",hold:"进入<b>字母索引</b>：右侧弧形字母轨道（A–Z、#、★）。沿轨道上下选字母，网格显示该字母的应用。<b>向左滑离轨道</b>（向左超过约 12 pt 且以横向为主）锁定字母，再移到应用上（三列），松手 → 分屏打开（已在分屏则全屏）。回到轨道附近解除锁定可继续换字母。★ 为搜索台收藏，其中的快捷操作松手直接执行。在空白处松手不打开任何应用。"},
+ {n:"快捷指令集合",g:"⧉",tap:"无动作（集合必须长按展开）。",hold:"到时长在手指处弹出列表，从列表中间<b>上下拖动</b>选择（移动约 8 pt 后才开始选），最下方是“取消”。在某一项上松手运行它；在“取消”或列表外松手什么都不做。"},
+ {n:"快捷指令（单个）",g:"⧈",tap:"运行这个快捷指令。",hold:null},
+ {n:"应用快捷方式",g:"✦",tap:"执行应用图标 3D Touch 菜单里的那一项。如果这个应用正在分屏或小窗里，会先关闭它的窗口再执行。",hold:null},
+ {n:"URL 快捷方式",g:"🔗",tap:"打开设定的网址或应用 URL Scheme，最多 10 个。",hold:null},
+ {n:"深色模式",g:"☾",tap:"切换浅色/深色外观。深色时面板里的图标点亮。",hold:null},
+ {n:"屏幕录制",g:"◉",tap:"开始系统录屏，录制中图标点亮；再选一次停止录制。",hold:null},
+ {n:"方向锁定",g:"⟲",tap:"切换竖排方向锁定，锁定时图标点亮。",hold:null},
+ {n:"重新打开应用",g:"↻",tap:"<b>有分屏</b> → 结束分屏应用、在后台重新启动，再放回分屏。<b>没有分屏</b> → 结束并重新全屏打开前台应用。在主屏无动作。",hold:null},
+ {n:"录入返回按钮",g:"☝︎",tap:"打开录入层，点返回按钮所在位置记录下来，供边缘返回使用。详见“边缘返回”一节。",hold:null},
+ {n:"呼出 Kayoko",g:"⎘",tap:"呼出 Kayoko 剪贴板（需要已安装 Kayoko）。",hold:null}
+];
+var list=$("scList");
+SC.forEach(function(s){
+  var el=document.createElement("div");el.className="card sc";
+  el.innerHTML='<div class="ic'+(s.app?' app':'')+'" style="'+(s.app?'background:'+s.app:'')+'">'+s.g+'</div><div><h3>'+s.n+'</h3><div class="act">'+
+   '<span class="tag tap">松手</span><span class="d">'+s.tap+'</span>'+
+   (s.hold?'<span class="tag hold">长按</span><span class="d">'+s.hold+'</span>':'<span class="tag no">长按</span><span class="d">没有长按动作，停留多久松手都一样。</span>')+
+   '</div></div>';
+  list.appendChild(el);
+});
+
+/* ---------------- settings table ---------------- */
+var SET=[
+ ["长按全屏时长","0.70 秒","0.30–2.00 秒；所有长按共用"],["手柄滑动距离","120 pt","10–240；拉过其 80% 面板展开"],
+ ["图标大小","52 pt","36–72"],["第一 / 二 / 三 / 四环","3 / 5 / 7 / 9 个","0–30；设 0 关闭该环及外环"],
+ ["环间距","10 pt","0–60"],["面板距边缘","6 pt","0–120"],["手柄宽度 / 高度","24 / 86 pt","4–52 / 4–160"],
+ ["手柄闲置渐隐","关闭","0–120 秒；渐隐后不透明度默认 25%"],["全局动画速度","1.00×","0.10–1.50×"],
+ ["竖屏初始尺寸","屏幕宽度 78%","横屏按屏幕高度计算"],["初始右边距","12 pt","横竖屏分别设置"],
+ ["窗口圆角","20 pt","0–60；竖屏、横屏分别设置"],["阴影强度 / 模糊","40% / 4 pt","0–50% / 0–24 pt"],
+ ["拖动缩放上限","初始尺寸 200%","100–200%"],["竖屏分屏固定居中","关闭","开启后竖屏初始与复位位置在屏幕正中"],
+ ["显示分屏应用图标与名称","开启","窗口顶部的应用标识"],["底部/顶部区域","宽 300、高 80 pt","宽 120–360，高 36–120，偏移 −30–40"],
+ ["角落厚度","10 pt","5–30"],["右边缘返回区域","宽 20 pt、高 70%","宽 10–40，高 30–90%"],
+ ["启用底部滑动手势","开启","关闭后底部只拖动，下滑仍复位"],["小窗数量","2 个","1–4"],
+ ["自动收纳时间","关闭","0–120 秒"],["新开分屏时当前窗口变小窗","开启","关闭则直接关闭旧窗口"],
+ ["竖屏 / 横屏使用外置键盘","开启 / 关闭","横竖屏分别选择"],["内置键盘放大倍数","160%","100–200%"],
+ ["键盘关闭遮罩深度","0.12","0–0.6；双击外部关闭分屏默认开启"],["右边缘滑动返回","开启","可设黑名单"],
+ ["通知横幅 / URL 跳转分屏","开启 / 开启","URL 可设黑名单"],["锁屏时清理分屏和小窗","关闭",""],
+ ["截图/录屏中隐藏手柄和面板","关闭",""],["允许分屏应用调用相机","关闭","首次安装需重启设备"]
+];
+var tb=$("setTbl");
+SET.forEach(function(r){var tr=document.createElement("tr");tr.innerHTML="<td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td>";tb.appendChild(tr)});
+
+/* ---------------- faq ---------------- */
+var FAQ=[
+ ["面板拉不出来？","先确认“启用 ParallelX”已打开；从手柄向左拉，而不是上下拖（上下是移动手柄）。拉的距离要超过“手柄滑动距离”的 80%。锁屏、通知中心打开时面板不出现。"],
+ ["本想分屏，松手却变成全屏？","在图标上停留超过了“长按全屏时长”（出现蓝色光框）。想更稳就把时长调长，最长 2 秒。"],
+ ["快捷指令集合、调节亮度松手没反应？","这两项必须长按：集合长按展开列表再拖选，亮度长按出现亮度条后上下拖。"],
+ ["搜索长按后松手没打开应用？","要先向左离开字母轨道锁定字母，再移到网格里的应用上松手；停在轨道或空白处松手不会打开。"],
+ ["边缘返回没反应？","检查是否在边缘返回黑名单里；起手点不能离手柄太近（24 pt 内），也不能在屏幕最上方或最下方 15%。仍不行就用“录入返回按钮”。"],
+ ["小窗少了一个？","小窗数量达到上限后，再停靠新窗口会关闭最早的那个。可在“位置、大小与排列”里调到 4 个。"],
+ ["分屏里的应用点不动？","冷启动的应用加载完成前窗口不接受点击；也可能是它缩成了小窗，轻点小窗恢复分屏。"],
+ ["改了手势区域大小没变化？","手势区域尺寸在下次打开窗口时生效；打开“显示手势触发区域”可以看到实际范围。"]
+];
+var fl=$("faqList");
+FAQ.forEach(function(q){var d=document.createElement("div");d.className="card";d.innerHTML="<h3>"+q[0]+"</h3><p>"+q[1]+"</p>";fl.appendChild(d)});
+
+/* ---------------- window map ---------------- */
+var ZONES={
+ top:["顶部区域（窗口上方）",[["拖动","慢慢拖动 → 移动窗口。"],["快速上滑","恢复初始位置与大小。"],["快速下滑","关闭分屏并<b>结束该应用后台</b>，清理后台卡片。"],["双击","关闭分屏。"],["长按","全屏打开该应用。"]],"默认宽 300 pt、高 80 pt，只响应单指。"],
+ tl:["左上角（圆角弧形带）",[["轻点","收成<b>左侧</b>小窗。"]],"厚度默认 10 pt，沿圆角走一段，不占用窗口内应用自己的触摸。"],
+ tr:["右上角（圆角弧形带）",[["轻点","收成<b>右侧</b>小窗。"]],"厚度默认 10 pt。"],
+ bl:["左下角",[["拖动","以右上为基准<b>等比缩放</b>窗口，左下角跟手。"]],"最大为初始尺寸的 200%（可设 100–200%），最小约 80–220 pt 宽，不会超出屏幕。"],
+ br:["右下角",[["拖动","以左上为基准<b>等比缩放</b>窗口，右下角跟手。"]],"缩放中显示预览，松手后应用按新尺寸重新布局。"],
+ bottom:["底部区域（窗口下方横条处）",[["拖动","慢慢拖动 → 移动窗口。快速轻扫不会移动窗口，而是触发下面的手势。"],["上滑","默认：停靠右侧小窗。"],["下滑","默认：复位；已在初始位置时全屏。"],["左滑","默认：切换上一个应用（跳过当前全屏应用）。"],["右滑","默认：返回上一层。"],["双击","默认：关闭分屏。"],["长按","默认：全屏打开。"]],"每个手势的动作都可在“手势区域 → 底部手势动作”里改。关闭“启用底部滑动手势”后只能拖动，下滑仍会复位。"],
+ edge:["右边缘返回条（窗口内侧）",[["向内滑","分屏里的应用返回上一层。"]],"默认宽 20 pt、高 70%，居中于右边缘；遵守边缘返回黑名单。"],
+ content:["应用内容",[["正常操作","和全屏使用一样点按、滚动、输入。"]],"应用冷启动加载期间不接受点击；键盘弹出时按键盘设置放大或显示在窗口外。"]
+};
+var zd=$("zdetail");
+function showZone(k){
+  var z=ZONES[k];
+  document.querySelectorAll(".zone").forEach(function(e){e.classList.toggle("on",e.getAttribute("data-z")===k)});
+  zd.innerHTML="<h3>"+z[0]+"</h3><div class='act'>"+z[1].map(function(a){return "<span class='tag "+(a[0]==="长按"?"hold":"tap")+"'>"+a[0]+"</span><span class='d'>"+a[1]+"</span>"}).join("")+"</div><p style='margin-top:10px'>"+z[2]+"</p>";
+}
+document.querySelectorAll(".zone").forEach(function(e){e.addEventListener("click",function(){showZone(e.getAttribute("data-z"))})});
+showZone("bottom");
+
+/* ---------------- simulator ---------------- */
+var scr=$("scr"),W=280,H=600;
+var home=$("home");for(var i=0;i<20;i++)home.appendChild(document.createElement("i"));
+var state={full:"Safari",split:null,docks:[],dark:false,rec:false,rot:false};
+var HOLDABLE={app:1,recent:1,window:1,shot:1,bright:1,search:1,group:1};
+var ITEMS=[
+ {k:"app",n:"微信",c:"#22c55e",g:"W"},{k:"app",n:"备忘录",c:"#f59e0b",g:"N"},{k:"recent",n:"最近：音乐",c:"#ef4444",g:"♪",app:"音乐"},
+ {k:"window",n:"切换全屏/分屏",g:"❐"},{k:"shot",n:"截屏",g:"⌗"},{k:"bright",n:"调节亮度",g:"☀︎"},{k:"search",n:"搜索",g:"⌕"},{k:"group",n:"快捷指令集合",g:"⧉"},
+ {k:"dark",n:"深色模式",g:"☾"},{k:"rec",n:"屏幕录制",g:"◉"},{k:"rot",n:"方向锁定",g:"⟲"},{k:"restart",n:"重新打开应用",g:"↻"},{k:"backrec",n:"录入返回按钮",g:"☝︎"},{k:"url",n:"URL 快捷方式",g:"🔗"},{k:"quick",n:"应用快捷方式",g:"✦"}
+];
+var RINGS=[3,5,7],SIZE=38,EDGE=6;
+var holdMs=700,thresholdPx=92;
+var g={on:false,mode:0,sx:0,sy:0,hy:H/2,prog:0,opened:false,sel:null,since:0,timer:null,held:false,expand:null,bstart:null,bval:.5,railLock:false,railAnchor:null,letter:null,gridSel:null,grpOrigin:0,grpSel:null};
+var handle=$("handle"),iconsBox=$("icons"),shade=$("shade"),preview=$("preview"),pvi=$("pvi"),ring=$("ring"),finger=$("finger");
+var handleY=H/2;
+function placeHandle(){handle.style.top=handleY+"px"}
+placeHandle();
+
+function pt(e){var r=scr.getBoundingClientRect();return {x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}}
+function sizeScreen(){var r=scr.getBoundingClientRect();W=r.width;H=r.height;}
+sizeScreen();
+
+var nodes=[];
+function layoutIcons(){
+  iconsBox.innerHTML="";nodes=[];
+  var spacing=SIZE+10,gap=SIZE+10,cy=handleY,cx=W-SIZE/2-EDGE;
+  var maxR=Math.min(W-SIZE-EDGE-16,Math.min(cy-34-SIZE/2-12,H-20-cy-SIZE/2-12));
+  var prev=0,idx=0,rings=[];
+  for(var r=0;r<RINGS.length;r++){
+    var n=RINGS[r],desired=n===1?0:spacing/(2*Math.sin(Math.PI/(2*(n-1))));
+    var rad=Math.max(SIZE*1.2,Math.max(prev+(rings.length?gap:0),Math.min(desired,maxR)));
+    if(rad>maxR)break;
+    var fits=rad+0.01>=desired?n:Math.floor(Math.PI/(2*Math.asin(Math.min(1,spacing/(2*rad)))))+1;
+    rings.push([Math.min(n,fits),rad]);prev=rad;
+  }
+  rings.forEach(function(rg){
+    var cnt=Math.min(rg[0],ITEMS.length-idx);
+    for(var s=0;s<cnt;s++){
+      var th=cnt===1?0:-Math.PI/2+Math.PI*s/(cnt-1);
+      var x=cx-rg[1]*Math.cos(th),y=cy+rg[1]*Math.sin(th),it=ITEMS[idx];
+      var d=document.createElement("div");d.className="s-icon"+(it.c?"":" sym");
+      if(it.c)d.style.background=it.c;
+      d.style.left=x+"px";d.style.top=y+"px";d.textContent=it.g;
+      iconsBox.appendChild(d);nodes.push({el:d,x:x,y:y,it:it});idx++;
+    }
+  });
+  refreshLit();
+}
+function refreshLit(){nodes.forEach(function(nd){var k=nd.it.k;nd.el.classList.toggle("lit",(k==="dark"&&state.dark)||(k==="rec"&&state.rec)||(k==="rot"&&state.rot))})}
+function setProgress(p){
+  g.prog=p;shade.style.background="rgba(5,8,20,"+(0.35*p)+")";
+  nodes.forEach(function(nd){nd.el.style.opacity=p;nd.el.style.transform="scale("+(0.4+0.6*p)+")"});
+  handle.style.transform="translateY(-50%) translateX("+(-30*p)+"px)";
+}
+function clearPanel(){
+  iconsBox.innerHTML="";nodes=[];shade.style.background="rgba(5,8,20,0)";handle.style.transform="translateY(-50%)";
+  preview.style.display="none";$("glow").style.opacity=0;$("bright").style.display="none";$("sel").style.display="none";$("group").style.display="none";
+  clearTimeout(g.timer);
+}
+
+function liveSel(t){$("liveSel").textContent=t}
+function liveWill(t){$("liveWill").innerHTML=t}
+function result(t){$("liveRes").innerHTML=t;toast(t.replace(/<[^>]+>/g,""))}
+function toast(t){var el=$("toast");el.textContent=t;el.style.opacity=1;clearTimeout(toast.t);toast.t=setTimeout(function(){el.style.opacity=0},2200)}
+
+/* ---- outcome text for current selection ---- */
+function willText(it,held){
+  var sp=state.split,fu=state.full;
+  switch(it.k){
+   case "app": case "recent":
+     var a=it.app||it.n;
+     if(held)return "<b>全屏打开 "+a+"</b>"+(sp&&sp!==a?"（当前分屏会先关闭）":"");
+     if(sp===a)return "它已在分屏中 → <b>转为全屏</b>";
+     if(state.docks.indexOf(a)>=0)return "它是小窗 → <b>恢复为分屏</b>";
+     return "<b>在分屏打开 "+a+"</b>"+(sp?"，当前分屏 "+sp+" 缩成右侧小窗":"")+"<br><span style='color:var(--faint)'>继续停留到 "+(holdMs/1000).toFixed(2)+" 秒会改为全屏</span>";
+   case "window":
+     if(held)return sp?"<b>分屏应用 "+sp+" 转为全屏</b>":fu?"<b>把 "+fu+" 放进分屏窗口</b>":"无动作（主屏且没有分屏）";
+     if(sp)return fu?"<b>交换</b>："+sp+" 变全屏，"+fu+" 进分屏":"<b>分屏 "+sp+" 缩成右侧小窗</b>";
+     return fu?"<b>把 "+fu+" 缩成右侧小窗</b>":"无动作（主屏且没有分屏）";
+   case "shot": return held?"<b>截图只复制到剪贴板</b>，不保存":"<b>截屏并保存到照片</b><br><span style='color:var(--faint)'>停留到时长后松手改为只复制</span>";
+   case "bright": return "松手无动作 · <b>需长按</b>后上下拖";
+   case "search": return "<b>打开搜索台</b><br><span style='color:var(--faint)'>停留到时长进入字母索引</span>";
+   case "group": return "松手无动作 · <b>需长按</b>展开集合";
+   case "dark": return "<b>切换为"+(state.dark?"浅色":"深色")+"外观</b>（没有长按）";
+   case "rec": return state.rec?"<b>停止录屏</b>（没有长按）":"<b>开始录屏</b>（没有长按）";
+   case "rot": return "<b>"+(state.rot?"解除":"开启")+"方向锁定</b>（没有长按）";
+   case "restart": return sp?"<b>重新启动分屏应用 "+sp+"</b>，再放回分屏":fu?"<b>重新启动 "+fu+"</b>并全屏打开":"无动作（在主屏）";
+   case "backrec": return "<b>打开录入层</b>，点返回按钮的位置";
+   case "url": return "<b>打开设定的网址</b>（没有长按）";
+   case "quick": return "<b>执行应用快捷方式</b>（没有长按）";
+  }
+  return "—";
+}
+
+/* ---- state rendering ---- */
+function render(){
+  var full=$("full");full.style.display=state.full?"flex":"none";$("fullName").textContent=state.full||"";
+  var sp=$("split");sp.style.display=state.split?"block":"none";$("splitName").textContent=state.split||"";
+  var dk=$("docks");dk.innerHTML="";state.docks.forEach(function(n){var d=document.createElement("div");d.textContent=n;dk.appendChild(d)});
+  scr.classList.toggle("dark",state.dark);$("recDot").style.display=state.rec?"inline":"none";$("lockIc").style.display=state.rot?"inline":"none";
+  document.querySelectorAll("#segFull button").forEach(function(b){b.classList.toggle("on",(b.getAttribute("data-v")||null)===state.full)});
+  document.querySelectorAll("#segSplit button").forEach(function(b){b.classList.toggle("on",(b.getAttribute("data-v")||null)===state.split)});
+}
+function park(n){state.docks.push(n);while(state.docks.length>2)state.docks.shift()}
+function openHost(a){
+  if(state.split===a){state.full=a;state.split=null;return "已在分屏中，转为全屏："+a}
+  var di=state.docks.indexOf(a);
+  if(di>=0){state.docks.splice(di,1);if(state.split)park(state.split);state.split=a;return "小窗恢复为分屏："+a}
+  if(state.full===a)state.full=null;
+  if(state.split)park(state.split);
+  state.split=a;return "在分屏打开："+a;
+}
+function openFull(a){state.split=null;var di=state.docks.indexOf(a);if(di>=0)state.docks.splice(di,1);state.full=a;return "全屏打开："+a}
+function flash(){var f=$("flash");f.style.transition="none";f.style.opacity=.9;requestAnimationFrame(function(){f.style.transition="opacity .5s";f.style.opacity=0})}
+
+function perform(it,held){
+  var sp=state.split,fu=state.full,t="";
+  switch(it.k){
+   case "app": case "recent": var a=it.app||it.n;t=held?openFull(a):openHost(a);break;
+   case "window":
+     if(held){ if(sp){state.full=sp;state.split=null;t="分屏应用转为全屏："+sp}else if(fu){state.split=fu;state.full=null;t="全屏应用进入分屏："+fu}else t="无动作" }
+     else if(sp){ if(fu){state.full=sp;state.split=fu;t="交换："+sp+" 全屏，"+fu+" 分屏"}else{park(sp);state.split=null;t="分屏缩成右侧小窗："+sp} }
+     else if(fu){park(fu);state.full=null;t="全屏应用缩成右侧小窗："+fu}else t="无动作";
+     break;
+   case "shot": flash();t=held?"截图已复制到剪贴板（未保存）":"已截屏并保存到照片";break;
+   case "bright": t="松手无动作：调节亮度需要长按";break;
+   case "search": $("search").style.display="block";t="打开搜索台（点手机任意处关闭）";break;
+   case "group": t="松手无动作：集合需要长按展开";break;
+   case "dark": state.dark=!state.dark;t=state.dark?"已切换为深色":"已切换为浅色";break;
+   case "rec": state.rec=!state.rec;t=state.rec?"开始录屏":"停止录屏";break;
+   case "rot": state.rot=!state.rot;t=state.rot?"已开启方向锁定":"已解除方向锁定";break;
+   case "restart": t=sp?"分屏应用 "+sp+" 重新启动并回到分屏":fu?fu+" 重新启动并全屏打开":"在主屏，无动作";break;
+   case "backrec": $("backrec").style.display="block";t="打开录入返回按钮层";break;
+   case "url": t="打开 URL 快捷方式";break;
+   case "quick": t="执行应用快捷方式";break;
+  }
+  render();result(t);
+}
+
+/* ---- hold-expanded modes ---- */
+var LETTERS=["A","B","M","S","W","Y","#","★"];
+var GROUPS={A:["App Store","Apple Store"],B:["哔哩哔哩","备忘录","便签"],M:["音乐","Maps"],S:["Safari","设置","Shortcuts"],W:["微信","Weather","文件"],Y:["邮件","语音备忘录"],"#":["123 计算"],"★":["截屏","微信","深色模式"]};
+var COLORS=["#22c55e","#3b82f6","#f59e0b","#ef4444","#a855f7","#14b8a6"];
+var railTop=70,railBot;
+function railX(y){var p=(y-railTop)/(railBot-railTop);p=Math.min(1,Math.max(0,p));return W-23-26*Math.sin(p*Math.PI)}
+function showSelector(){
+  var s=$("sel");s.style.display="block";preview.style.display="none";iconsBox.style.opacity=0;
+  railBot=H-70;var rail=$("rail");rail.innerHTML="";
+  LETTERS.forEach(function(l,i){var sp=document.createElement("span");sp.textContent=l;var y=railTop+(i+.5)*(railBot-railTop)/LETTERS.length;sp.style.top=(y-railTop)+"px";sp.style.right=(W-12-railX(y)-11)+"px";rail.appendChild(sp)});
+  g.letter=null;g.railLock=false;g.gridSel=null;g.railAnchor=null;$("selHd").textContent="";$("selGrid").innerHTML="";$("selLock").textContent="沿右侧轨道上下选字母";
+}
+function selectorUpdate(p){
+  var step=(railBot-railTop)/LETTERS.length,near=Math.abs(p.x-railX(p.y))<=(g.railLock?10:26)&&p.y>=railTop&&p.y<=railBot;
+  if(g.railLock){ if(near){g.railLock=false;g.railAnchor=p} }
+  if(g.railAnchor&&g.railAnchor.x-p.x>=12&&g.railAnchor.x-p.x>Math.abs(p.y-g.railAnchor.y)&&!g.railLock){g.railLock=true;$("selLock").textContent="已锁定 "+g.letter+"，移到应用上松手"}
+  if(near&&!g.railLock){
+    var idx=Math.min(LETTERS.length-1,Math.max(0,Math.floor((p.y-railTop)/step)));
+    var l=LETTERS[idx];
+    if(l!==g.letter){g.letter=l;renderGrid();}
+    if(!g.railAnchor||Math.abs(p.y-g.railAnchor.y)>=6)g.railAnchor=p;
+    $("selHd").textContent=l;$("selLock").textContent="向左滑离轨道锁定 "+l;setGrid(null);
+    document.querySelectorAll("#rail span").forEach(function(sp){sp.classList.toggle("on",sp.textContent===l)});
+    liveWill("正在选字母 <b>"+l+"</b>：向左滑离轨道锁定，再移到应用上");return;
+  }
+  if(!g.letter){liveWill("先在右侧轨道上选字母");return}
+  var hit=null;document.querySelectorAll("#selGrid div").forEach(function(d,i){var r=d.getBoundingClientRect(),sr=scr.getBoundingClientRect();
+    var x=(r.left-sr.left)*W/sr.width,y=(r.top-sr.top)*H/sr.height,w=r.width*W/sr.width,h=r.height*H/sr.height;
+    if(p.x>=x&&p.x<=x+w&&p.y>=y&&p.y<=y+h)hit=i});
+  setGrid(hit);
+  if(hit===null)liveWill("没有选中应用：此时松手不打开任何应用");
+  else{var n=GROUPS[g.letter][hit];liveWill(g.letter==="★"&&(n==="截屏"||n==="深色模式")?"<b>执行收藏的快捷操作：</b>"+n:"<b>在分屏打开 "+n+"</b>（已在分屏则全屏）")}
+}
+function renderGrid(){var gd=$("selGrid");gd.innerHTML="";(GROUPS[g.letter]||[]).forEach(function(n,i){var d=document.createElement("div");d.innerHTML='<i style="background:'+COLORS[i%COLORS.length]+'"></i>'+n;gd.appendChild(d)});g.gridSel=null}
+function setGrid(i){g.gridSel=i;document.querySelectorAll("#selGrid div").forEach(function(d,j){d.classList.toggle("on",j===i)})}
+
+var GROUP_ITEMS=["扫描文稿","开启专注模式","每日记账","整理截图"];
+function showGroup(p){
+  var gp=$("group");gp.innerHTML="";GROUP_ITEMS.concat(["取消"]).forEach(function(t,i){var d=document.createElement("div");d.textContent=t;if(i===GROUP_ITEMS.length)d.className="cancel";gp.appendChild(d)});
+  gp.style.display="block";var h=gp.offsetHeight;
+  var top=Math.min(H-h-20,Math.max(40,p.y-h/2)),left=Math.max(10,p.x-170-10);
+  gp.style.left=left+"px";gp.style.top=top+"px";g.grpBox={x:left,y:top,w:170,h:h};g.grpOrigin=top+h/2;g.grpSel=null;preview.style.display="none";iconsBox.style.opacity=.15;
+}
+function groupUpdate(p){
+  var b=g.grpBox,inside=p.x>=b.x&&p.x<=b.x+b.w&&p.y>=b.y&&p.y<=b.y+b.h,next=null,cancel=false;
+  if(inside){var delta=p.y-g.grpOrigin,stepv=Math.min(36,Math.max(8,b.h/(GROUP_ITEMS.length+1))),row=Math.min(GROUP_ITEMS.length,Math.max(0,Math.floor(GROUP_ITEMS.length/2)+Math.trunc(delta/stepv)));
+    var moved=Math.abs(delta)>=8;next=moved&&row<GROUP_ITEMS.length?row:null;cancel=moved&&row===GROUP_ITEMS.length}
+  g.grpSel=next;var rows=$("group").children;for(var i=0;i<rows.length;i++)rows[i].classList.toggle("on",i===next||(cancel&&i===GROUP_ITEMS.length));
+  liveWill(next!==null?"<b>运行快捷指令：</b>"+GROUP_ITEMS[next]:cancel?"在“取消”上松手：什么都不做":inside?"从列表中间上下拖动选择（移动约 8 pt 后开始）":"在列表外松手：什么都不做");
+}
+function showBright(p){g.bstart={y:p.y,v:g.bval};$("bright").style.display="block";preview.style.display="none";iconsBox.style.opacity=0;updBright(g.bval)}
+function updBright(v){g.bval=v;$("brightFill").style.height=(v*100)+"%";$("brightPc").textContent="亮度 "+Math.round(v*100)+"%";$("dim").style.opacity=(1-v)*0.55}
+
+/* ---- selection & hold timer ---- */
+function select(nd){
+  if(g.sel===nd)return;
+  if(g.sel)g.sel.el.classList.remove("sel");
+  clearTimeout(g.timer);g.held=false;$("glow").style.opacity=0;ring.style.display="none";
+  g.sel=nd;g.since=performance.now();
+  if(!nd){preview.style.display="none";liveSel("（空白处）");liveWill("面板收回，什么都不做");return}
+  nd.el.classList.add("sel");pvi.textContent=nd.it.g;preview.style.display="flex";preview.style.background=nd.it.c||"rgba(255,255,255,.85)";preview.style.color=nd.it.c?"#fff":"#1d2645";
+  liveSel(nd.it.n+(HOLDABLE[nd.it.k]?"（可长按）":"（没有长按）"));liveWill(willText(nd.it,false));
+  if(HOLDABLE[nd.it.k]){ring.style.display="block";g.timer=setTimeout(function(){onHold(nd)},holdMs)}
+}
+function onHold(nd){
+  if(g.sel!==nd)return;g.held=true;ring.style.display="none";
+  nd.el.animate&&nd.el.animate([{transform:"scale(1.18)"},{transform:"scale(1.32)"},{transform:"scale(1.18)"}],{duration:180});
+  var k=nd.it.k;
+  if(k==="app"||k==="recent"){$("glow").style.opacity=1;liveWill(willText(nd.it,true))}
+  else if(k==="shot"||k==="window"){liveWill("（已震动）"+willText(nd.it,true))}
+  else if(k==="bright"){g.expand="bright";showBright(g.last);liveWill("上下拖动调节亮度，松手关闭面板")}
+  else if(k==="search"){g.expand="search";showSelector();liveWill("沿右侧轨道上下选字母")}
+  else if(k==="group"){g.expand="group";showGroup(g.last);groupUpdate(g.last)}
+}
+var raf=null;
+function tick(){
+  if(!g.on){raf=null;return}
+  var el=g.sel&&HOLDABLE[g.sel.it.k]&&!g.expand?Math.min(holdMs,performance.now()-g.since):0;
+  $("liveBar").style.width=(g.sel&&!g.expand?Math.min(100,el/holdMs*100):0)+"%";
+  $("liveTime").textContent=(g.sel&&!g.expand?((performance.now()-g.since)/1000).toFixed(2):"0.00")+" / "+(holdMs/1000).toFixed(2)+" 秒";
+  raf=requestAnimationFrame(tick);
+}
+
+/* ---- pointer handling ---- */
+function closeOverlays(){$("search").style.display="none";$("backrec").style.display="none"}
+scr.addEventListener("pointerdown",function(e){
+  sizeScreen();var p=pt(e);
+  if($("search").style.display==="block"||$("backrec").style.display==="block"){closeOverlays();return}
+  if(!(p.x>=W-34&&Math.abs(p.y-handleY)<=48)){toast("请从右边缘的手柄开始");return}
+  e.preventDefault();try{scr.setPointerCapture(e.pointerId)}catch(_){}
+  g.on=true;g.mode=0;g.sx=p.x;g.sy=p.y;g.hy=handleY;g.prog=0;g.opened=false;g.sel=null;g.held=false;g.expand=null;g.last=p;
+  iconsBox.style.opacity=1;finger.style.display="block";finger.style.left=p.x+"px";finger.style.top=p.y+"px";
+  liveSel("—");liveWill("向左拉打开面板；上下拖动则移动手柄");
+  if(!raf)raf=requestAnimationFrame(tick);
+});
+scr.addEventListener("pointermove",function(e){
+  if(!g.on)return;var p=pt(e);g.last=p;finger.style.left=p.x+"px";finger.style.top=p.y+"px";
+  var dx=p.x-g.sx,dy=p.y-g.sy;
+  if(g.mode===0&&Math.max(Math.abs(dx),Math.abs(dy))>5){g.mode=Math.abs(dy)>Math.abs(dx)?2:1;if(g.mode===1){layoutIcons();setProgress(0)}}
+  if(g.mode===2){handleY=Math.min(H*.78,Math.max(H*.22,g.hy+dy));placeHandle();liveWill("移动手柄位置，松手保存");return}
+  if(g.mode!==1)return;
+  if(g.expand==="search"){selectorUpdate(p);return}
+  if(g.expand==="group"){groupUpdate(p);return}
+  if(g.expand==="bright"){var v=Math.min(1,Math.max(0,g.bstart.v+(g.bstart.y-p.y)/(H*0.405)));updBright(v);return}
+  var prog=Math.max(g.prog,Math.min(1,Math.max(0,-dx/thresholdPx)));
+  if(!g.opened){setProgress(Math.min(1,prog/0.8));g.prog=prog;if(prog>=0.8){g.opened=true;setProgress(1);liveWill("面板已展开：滑到图标上")}else{liveWill("继续向左拉（"+Math.round(prog/0.8*100)+"%）");return}}
+  var hit=null;for(var i=nodes.length-1;i>=0;i--){var nd=nodes[i];if(Math.abs(p.x-nd.x)<=SIZE/2+4&&Math.abs(p.y-nd.y)<=SIZE/2+4){hit=nd;break}}
+  select(hit);
+});
+function end(e,cancel){
+  if(!g.on)return;g.on=false;finger.style.display="none";clearTimeout(g.timer);
+  var held=g.held||(g.sel&&HOLDABLE[g.sel.it.k]&&performance.now()-g.since>=holdMs);
+  if(g.mode===2){liveSel("—");liveWill("—");result("手柄移到新位置并保存（屏幕高度 "+Math.round(handleY/H*100)+"%）");return}
+  var sel=g.sel,expand=g.expand;
+  if(sel)sel.el.classList.remove("sel");
+  clearPanel();iconsBox.style.opacity=1;$("dim").style.opacity=(1-g.bval)*0.55;
+  liveSel("—");liveWill("—");$("liveBar").style.width="0%";
+  if(cancel||g.mode!==1||!g.opened){result("面板没有展开，什么都不做");return}
+  if(expand==="bright"){result("亮度设为 "+Math.round(g.bval*100)+"%，面板关闭");return}
+  if(expand==="search"){
+    if(g.gridSel===null||!g.letter){result("没有选中应用，未打开任何应用");return}
+    var n=GROUPS[g.letter][g.gridSel];
+    if(g.letter==="★"&&n==="截屏"){flash();result("执行收藏：截屏");return}
+    if(g.letter==="★"&&n==="深色模式"){state.dark=!state.dark;render();result("执行收藏：深色模式");return}
+    result(openHost(n));render();return;
+  }
+  if(expand==="group"){result(g.grpSel!==null?"运行快捷指令："+GROUP_ITEMS[g.grpSel]:"没有选择，什么都不做");return}
+  if(!sel){result("在空白处松手，面板收回");return}
+  perform(sel.it,!!held&&(sel.it.k==="app"||sel.it.k==="recent"||sel.it.k==="shot"||sel.it.k==="window"));
+}
+scr.addEventListener("pointerup",function(e){end(e,false)});
+scr.addEventListener("pointercancel",function(e){end(e,true)});
+scr.addEventListener("contextmenu",function(e){e.preventDefault()});
+
+document.querySelectorAll("#segFull button").forEach(function(b){b.addEventListener("click",function(){state.full=b.getAttribute("data-v")||null;render()})});
+document.querySelectorAll("#segSplit button").forEach(function(b){b.addEventListener("click",function(){var v=b.getAttribute("data-v")||null;state.split=v;if(v){var i=state.docks.indexOf(v);if(i>=0)state.docks.splice(i,1)}render()})});
+$("hold").addEventListener("input",function(){holdMs=+this.value;$("holdLbl").textContent=holdMs+" 毫秒";$("liveTime").textContent="0.00 / "+(holdMs/1000).toFixed(2)+" 秒"});
+$("reset").addEventListener("click",function(){state={full:"Safari",split:null,docks:[],dark:false,rec:false,rot:false};g.bval=.8;updBright(.8);handleY=H/2;placeHandle();closeOverlays();render();result("演示已重置")});
+updBright(.8);render();
+})();
+</script>
+</body>
+</html>

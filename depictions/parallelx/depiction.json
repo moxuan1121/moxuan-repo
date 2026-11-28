@@ -17,6 +17,12 @@
           "useSpacing": true
         },
         {
+          "class": "DepictionTableButtonView",
+          "title": "使用说明与交互演示",
+          "action": "https://moxuan1121.github.io/moxuan-repo/depictions/parallelx/guide/",
+          "openExternal": false
+        },
+        {
           "class": "DepictionSeparatorView"
         },
         {
