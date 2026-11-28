@@ -279,17 +279,17 @@ Author: moxuan
 Name: Myrtle Minimal Unified
 
 Package: com.moxuan.parallelx
-Version: 0.1.0~alpha463
+Version: 0.1.0~alpha465
 Architecture: iphoneos-arm64e
 Maintainer: moxuan
 Installed-Size: 1400
 Depends: mobilesubstrate, preferenceloader, firmware (>= 15.0), firmware (<< 16.0)
 Conflicts: com.m4fn3.myrtle, com.moxuan.myrtleswitcherfix, com.moxuan.moxuansplit, com.moxuan.swipeback
-Filename: debs/com.moxuan.parallelx_0.1.0~alpha463_iphoneos-arm64e.deb
-Size: 372774
-MD5sum: 09091274ce4e5dc3d0f42394e4bbc13f
-SHA1: 6b33955d3cccc51e69aabb20ca118850c5755f42
-SHA256: 725154da5c84c897562dbbee71f031e5db67b241761d909e45c1df82ea710196
+Filename: debs/com.moxuan.parallelx_0.1.0~alpha465_iphoneos-arm64e.deb
+Size: 373234
+MD5sum: 23ea18eb7649f9749102904e0c73e59d
+SHA1: 274b5440890c61d210494e3ba37c7d45e2c77b8c
+SHA256: 1a00023051ef9c2c430233741c90535efc51ff5bcd29c3d01741c940ff6fbc3e
 Section: Tweaks
 Description: Minimal iOS 15 RootHide floating app window with a Swift side panel.
 Author: moxuan
